@@ -3,19 +3,23 @@
 {% block page_content %}
 <h1>Projects</h1>
 <div class="row">
-{% for project in projects %}
-    <div class="col-md-4">
-        <div class="card mb-2">
-            <div class="card-body">
-                <h5 class="card-title">{{ project.title }}</h5>
-                <p class="card-text">{{ project.description }}</p>
-                <a href="{% url 'project_detail' project.pk %}"
-                   class="btn btn-primary">
-                    Read More
-                </a>
+    {% for project in projects %}
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="card mb-3 shadow-sm">
+                {% if project.image %}
+                    <img src="{{ project.image.url }}" class="card-img-top" alt="{{ project.title }}">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ project.title }}</h5>
+                    <p class="card-text">{{ project.description|truncatewords:20 }}</p>
+                    <a href="{% url 'project_detail' project.pk %}" class="btn btn-primary">
+                        Read More
+                    </a>
+                </div>
             </div>
         </div>
-    </div>
+    {% empty %}
+        <p>No projects available at the moment.</p>
     {% endfor %}
 </div>
 {% endblock %}
